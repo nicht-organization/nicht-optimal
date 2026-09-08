@@ -1,0 +1,27 @@
+name: nicht-optimal CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-test-bench:
+    name: GCC C11 Test & Benchmark Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code with Submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc make build-essential
+
+      - name: Run Clean Build & Verification Script
+        run: |
+          chmod +x clean_build.sh
+          ./clean_build.sh
