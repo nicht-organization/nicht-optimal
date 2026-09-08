@@ -38,7 +38,7 @@ nicht-optimal/
     └── bench_multi_solvers.c # Big data multi-algorithm benchmark harness
 ```
 
-Performance Benchmark
+## Performance Benchmark
 Results measured on standard Linux x86_64 / GCC -O3:
 
 | Graph Size | Algorithm | Final Tour Length | Iterations | Execution Time |
