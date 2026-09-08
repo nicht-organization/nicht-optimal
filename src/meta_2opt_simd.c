@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include "nicht/solvers_meta.h"
 #include <time.h>
 #include <math.h>

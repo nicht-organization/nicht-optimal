@@ -8,7 +8,7 @@
 
 /* Standardized Meta-Heuristic Solution State */
 typedef struct {
-    uint32_t tour[MAX_NODES];       /* Node sequence array */
+    uint32_t tour[MAX_TSPLIB_NODES];       /* Node sequence array */
     double cost;                    /* Total tour length / objective cost */
     uint64_t evaluations;           /* Total candidate moves evaluated */
     double execution_time_ms;       /* Total elapsed search time */
@@ -23,7 +23,7 @@ typedef struct {
 
 /* Competition Framework Solver Interface Function Pointer */
 typedef bool (*MetaSolverFunc)(
-    const TSPInstance *inst, 
+    const TSPLIBInstance *inst, 
     const SolverBudget *budget, 
     MetaSolution *out_sol
 );
@@ -40,7 +40,7 @@ typedef enum {
 /* Uniform Function Call for Competition Races */
 bool solver_run_by_type(
     MetaSolverType type,
-    const TSPInstance *inst,
+    const TSPLIBInstance *inst,
     const SolverBudget *budget,
     MetaSolution *out_sol
 );
@@ -49,12 +49,12 @@ bool solver_run_by_type(
  */
 
 /* SIMD 2-Opt Local Search (Dense Matrix Cache Line Optimized) */
-bool solver_2opt_simd_run(const TSPInstance *inst, const SolverBudget *budget, MetaSolution *out_sol);
+bool solver_2opt_simd_run(const TSPLIBInstance *inst, const SolverBudget *budget, MetaSolution *out_sol);
 
 /* Lin-Kernighan-Helsgaun (LKH-3 style) Variable K-Opt Hyper-Heuristic */
-bool solver_lkh_bridge_run(const TSPInstance *inst, const SolverBudget *budget, MetaSolution *out_sol);
+bool solver_lkh_bridge_run(const TSPLIBInstance *inst, const SolverBudget *budget, MetaSolution *out_sol);
 
 /* Apophatic Subtractive Sieve: Prunes non-promising edges via B0 friction bounds */
-bool solver_apophatic_sieve_run(const TSPInstance *inst, const SolverBudget *budget, MetaSolution *out_sol);
+bool solver_apophatic_sieve_run(const TSPLIBInstance *inst, const SolverBudget *budget, MetaSolution *out_sol);
 
 #endif /* NICHT_SOLVERS_META_H */

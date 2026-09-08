@@ -8,7 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_TSPLIB_NODES 1024
+#define MAX_NODES 1024
+#define MAX_TSPLIB_NODES MAX_NODES
 
 typedef enum {
     NODE_COORD_EUC_2D,
@@ -26,15 +27,18 @@ typedef struct {
     char name[64];
     uint32_t dimension;
     TSPLIBCoordType coord_type;
-    TSPNode2D nodes[MAX_TSPLIB_NODES];
-    float weight_matrix[MAX_TSPLIB_NODES * MAX_TSPLIB_NODES]; /* Continuous 1D Tape */
-} TSPLIBInstance;
+    TSPNode2D nodes[MAX_NODES];
+    float weight_matrix[MAX_NODES * MAX_NODES]; /* 1D Tape Matrix */
+} TSPInstance;
+
+/* Compatibility typedef */
+typedef TSPInstance TSPLIBInstance;
 
 /* Zero-allocation parser for raw memory buffers containing .tsp files */
-static inline bool tsplib_parse_buffer(const char *buffer, TSPLIBInstance *out_inst) {
+static inline bool tsplib_parse_buffer(const char *buffer, TSPInstance *out_inst) {
     if (!buffer || !out_inst) return false;
-    memset(out_inst, 0, sizeof(TSPLIBInstance));
-    out_inst->coord_type = NODE_COORD_EUC_2D; /* Default fallback */
+    memset(out_inst, 0, sizeof(TSPInstance));
+    out_inst->coord_type = NODE_COORD_EUC_2D;
 
     const char *line = buffer;
     bool reading_coords = false;
@@ -44,7 +48,7 @@ static inline bool tsplib_parse_buffer(const char *buffer, TSPLIBInstance *out_i
             sscanf(line, "NAME : %63s", out_inst->name);
         } else if (strncmp(line, "DIMENSION", 9) == 0) {
             sscanf(line, "DIMENSION : %u", &out_inst->dimension);
-            if (out_inst->dimension > MAX_TSPLIB_NODES) return false;
+            if (out_inst->dimension > MAX_NODES) return false;
         } else if (strncmp(line, "NODE_COORD_SECTION", 18) == 0) {
             reading_coords = true;
         } else if (strncmp(line, "EOF", 3) == 0) {
@@ -60,7 +64,6 @@ static inline bool tsplib_parse_buffer(const char *buffer, TSPLIBInstance *out_i
             }
         }
 
-        /* Advance to next line */
         const char *next = strchr(line, '\n');
         if (!next) break;
         line = next + 1;
