@@ -79,4 +79,4 @@ nicht-optimal exposes pure C functions with static linkability for direct consum
 
 ## License
 
-[The Unlicense][LICENSE] - Free and unencumbered public domain software.
+[The Unlicense](LICENSE) - Free and unencumbered public domain software.
