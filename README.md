@@ -51,7 +51,7 @@ Results measured on standard Linux x86_64 / GCC -O3:
 
 ---
 
-Quickstart
+## Quickstart
 
 1. Clone repository with submodules:
    ```bash
@@ -67,7 +67,7 @@ Quickstart
 
 ---
 
-Language Library Bindings (FFI Path)
+## Language Library Bindings (FFI Path)
 
 nicht-optimal exposes pure C functions with static linkability for direct consumption across languages:
 
@@ -77,6 +77,6 @@ nicht-optimal exposes pure C functions with static linkability for direct consum
 
 ---
 
-License
+## License
 
 [The Unlicense][LICENSE] - Free and unencumbered public domain software.
